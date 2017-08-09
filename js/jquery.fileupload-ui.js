@@ -107,6 +107,15 @@
                     }).removeClass('processing');
                     that._renderPreviews(data);
                 }).done(function () {
+                    if (data.files.error) {
+                        data.context.each(function (index) {
+                            var error = data.files[index].error;
+                            if (error) {
+                                $(this).find('.error').text(error);
+                            }
+                        });
+                    }
+                    
                     data.context.find('.start').prop('disabled', false);
                     if ((that._trigger('added', e, data) !== false) &&
                             (options.autoUpload || data.autoUpload) &&
